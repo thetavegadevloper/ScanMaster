@@ -1,0 +1,243 @@
+﻿@model IEnumerable<ScanMaster.Report>
+
+
+@{ ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
+<h2>
+    Dashboard
+</h2>
+<div class="row" >
+    
+    
+    <div class="col-sm-3" style="float:right ">
+        <input type="date" id="datepicker" onchange="onChangeCalender()" name="search" class="form-control" placeholder="Select Date" />
+    </div>
+
+    <br /><br />
+</div>
+<div class="row">
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-motorcycle fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge" id="scount">@ViewBag.Count</div>
+                        <div> Todays Barcode Scanned </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="getbcode">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-check fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge" id="pcount">@ViewBag.Scancount</div>
+                        <div> Todays Total Part Checked </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="getpart">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-thumbs-up fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge" id="okcount">@ViewBag.OKCount</div>
+                        <div> Todays OK Part Count </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="getok">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-thumbs-down fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge" id="nok">@ViewBag.NotOKCount</div>
+                        <div> Todays NotOK Part Count </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="getnotok">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<hr />
+<div class="container" id="productsPlace">
+
+</div>
+<script type="text/javascript">
+    //$(document).ready(function () {
+    //    var m = new Date();
+    //    var dateString = m.getDate() + "-" + ("0" + (m.getMonth() + 1)).slice(-2) + "-" + m.getFullYear();
+    //    $("#datepicker").datepicker("setDate", new Date(dateString));
+    //    console.log(dateString);
+    //});
+    function onChangeCalender() {
+        $.ajax({
+            type: "POST",
+            url: '/ReportAll/Notokcountvs/?search=' + $("#datepicker").val(),
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (r) {
+
+                $('#nok').html(r)
+
+                console.log($("#datepicker").val() + r);
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: '/ReportAll/okcountvs/?search=' + $("#datepicker").val(),
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (r) {
+
+                $('#okcount').html(r)
+
+                console.log($("#datepicker").val() + r);
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: '/ReportAll/part/?search=' + $("#datepicker").val(),
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (r) {
+
+                $('#pcount').html(r)
+
+                console.log($("#datepicker").val() + r);
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: '/ReportAll/scanned/?search=' + $("#datepicker").val(),
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (r) {
+
+                $('#scount').html(r)
+
+                console.log($("#datepicker").val() + r);
+            }
+        });
+}
+
+    $('.getbcode').on('click', function () {
+
+        var m = new Date();
+
+        var dateString = m.getDate() + "-" + ("0" + (m.getMonth() + 1)).slice(-2) + "-" + m.getFullYear();
+        $("#datepicker").datepicker('setDate', dateString);
+        $.ajax({
+            type: "POST",
+            url: '/ReportAll/ScannedCode/?search=' + $("#datepicker").val(),
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (r) {
+                $('#productsPlace').html(r);
+                console.log(dateString);
+            }
+        });
+    });
+
+    $('.getpart').on('click', function () {
+
+        $.ajax({
+            type: "POST",
+            url: '/ReportAll/partname/?search=' + $("#datepicker").val(),
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (r) {
+                $('#productsPlace').html(r);
+                console.log($("#datepicker").val() + r);
+            }
+        });
+    });
+
+
+    $('.getok').on('click', function () {
+
+        $.ajax({
+            type: "POST",
+            url: '/ReportAll/okcountv/?search=' + $("#datepicker").val(),
+            cache: false,
+            contentType: false,
+            processData: false,
+
+            success: function (r) {
+                $('#productsPlace').html(r);
+                console.log($("#datepicker").val() + r);
+            }
+        });
+    });
+
+
+    $('.getnotok').on('click', function () {
+
+        $.ajax({
+            type: "POST",
+            url: '/ReportAll/Notokcountv/?search=' + $("#datepicker").val(),
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (r) {
+
+                $('#productsPlace').html(r);
+             //   console.log($("#datepicker").val() + r);
+            }
+        });
+     
+    });
+</script>

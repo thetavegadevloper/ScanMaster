@@ -1,0 +1,74 @@
+﻿@model IEnumerable<ScanMaster.Report>
+
+<div class="container">
+    <h2>Ok Count</h2>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Ok Count</div>
+        <div class="panel-body">
+
+            <table id="myTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ModelCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PartName)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Activestatus)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TStamp)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tbody id="tablebody">
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModelCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PartName)
+                            </td>
+                            <td class="stat">
+                                @{var isAttachmentA = (item.Activestatus.GetValueOrDefault() ? "OK" : "NotOk");}
+                                @Html.DisplayFor(modelItem => isAttachmentA)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TStamp)
+                            </td>
+
+                        </tr>
+                    </tbody>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+<style>
+
+    .stat {
+        background: grey;
+        color: wheat;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $("#tablebody > tr").each(function (index, elem) {
+            var status = $.trim($(elem).find(".stat").html());
+            if (status == "NotOk") {
+                $(elem).find(".stat").css('background', 'brown');
+            }
+            else if (status == "OK") {
+                $(elem).find(".stat").css('background', 'green');
+            }
+            console.log(status);
+        });
+    });
+</script>

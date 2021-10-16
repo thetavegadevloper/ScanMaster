@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BarcodeScanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BarcodeMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Barcode" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EngMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Barcode" Type="nvarchar(max)" />
+          <Property Name="ModelName" Type="nvarchar(max)" />
+          <Property Name="ModelCode" Type="nvarchar(max)" />
+          <Property Name="CreatedDateTime" Type="datetime" />
+          <Property Name="UpdatesDateTime" Type="datetime" />
+          <Property Name="UpdateNo" Type="nchar" MaxLength="10" />
+          <Property Name="Activestatus" Type="bit" />
+        </EntityType>
+        <EntityType Name="ModelMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ModelCode" Type="nvarchar(max)" />
+          <Property Name="ChecklistPara" Type="nvarchar(max)" />
+          <Property Name="type" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedDatetime" Type="datetime" />
+          <Property Name="UpdateNo" Type="nvarchar(max)" />
+          <Property Name="ActiveStatus" Type="bit" />
+        </EntityType>
+        <EntityType Name="ModelMaster2">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModelName" Type="nvarchar(max)" />
+          <Property Name="ModelCode" Type="nvarchar(max)" />
+          <Property Name="PartName" Type="nvarchar(max)" />
+          <Property Name="PartType" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="Activestatus" Type="bit" />
+          <Property Name="PartDescription" Type="nvarchar(max)" />
+          <Property Name="Barcode" Type="nvarchar(max)" />
+          <Property Name="PartNo" Type="nvarchar(max)" />
+          <Property Name="ImagePath" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModelCode" Type="nvarchar(max)" />
+          <Property Name="PartName" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="Activestatus" Type="bit" />
+          <Property Name="TStamp" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Report_Master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Barcode" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PartName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IDENTIFICATION_MARK" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Check_Status" Type="bit" Nullable="false" />
+          <Property Name="Added_DateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PWord" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <Function Name="getreportssp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start" Type="datetime" Mode="In" />
+          <Parameter Name="end" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="BarcodeScanModelStoreContainer">
+          <EntitySet Name="BarcodeMaster" EntityType="Self.BarcodeMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EngMaster" EntityType="Self.EngMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ModelMaster" EntityType="Self.ModelMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ModelMaster2" EntityType="Self.ModelMaster2" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Report_Master" EntityType="Self.Report_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserMaster" EntityType="Self.UserMaster" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BarcodeScanModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BarcodeMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Barcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="EngMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModelName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ModelCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatesDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdateNo" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Activestatus" Type="Boolean" />
+          <Property Name="Barcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ModelMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ModelCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ChecklistPara" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedDatetime" Type="DateTime" Precision="3" />
+          <Property Name="UpdateNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Report_Master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Barcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PartName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IDENTIFICATION_MARK" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Check_Status" Type="Boolean" Nullable="false" />
+          <Property Name="Added_DateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PWord" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="BarcodeScanEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BarcodeMasters" EntityType="Self.BarcodeMaster" />
+          <EntitySet Name="EngMasters" EntityType="Self.EngMaster" />
+          <EntitySet Name="ModelMasters" EntityType="Self.ModelMaster" />
+          <EntitySet Name="Report_Master" EntityType="Self.Report_Master" />
+          <EntitySet Name="UserMasters" EntityType="Self.UserMaster" />
+          <EntitySet Name="Categories" EntityType="BarcodeScanModel.Category" />
+          <EntitySet Name="ModelMaster2" EntityType="BarcodeScanModel.ModelMaster2" />
+          <FunctionImport Name="getreportssp" ReturnType="Collection(BarcodeScanModel.getreportssp_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="Getfuctionreport">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="end" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="Reports" EntityType="BarcodeScanModel.Report" />
+        </EntityContainer>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ModelMaster2">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModelName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ModelCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PartName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PartType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Activestatus" Type="Boolean" />
+          <Property Name="PartDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Barcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PartNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="getreportssp_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="ModelCode" Nullable="true" />
+          <Property Type="String" Name="PartName" Nullable="true" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="Activestatus" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModelCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PartName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Activestatus" Type="Boolean" />
+          <Property Name="TStamp" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BarcodeScanModelStoreContainer" CdmEntityContainer="BarcodeScanEntities">
+          <EntitySetMapping Name="BarcodeMasters">
+            <EntityTypeMapping TypeName="BarcodeScanModel.BarcodeMaster">
+              <MappingFragment StoreEntitySet="BarcodeMaster">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EngMasters">
+            <EntityTypeMapping TypeName="BarcodeScanModel.EngMaster">
+              <MappingFragment StoreEntitySet="EngMaster">
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="ModelCode" ColumnName="ModelCode" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="UpdatesDateTime" ColumnName="UpdatesDateTime" />
+                <ScalarProperty Name="UpdateNo" ColumnName="UpdateNo" />
+                <ScalarProperty Name="Activestatus" ColumnName="Activestatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ModelMasters">
+            <EntityTypeMapping TypeName="BarcodeScanModel.ModelMaster">
+              <MappingFragment StoreEntitySet="ModelMaster">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ModelCode" ColumnName="ModelCode" />
+                <ScalarProperty Name="ChecklistPara" ColumnName="ChecklistPara" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedDatetime" ColumnName="UpdatedDatetime" />
+                <ScalarProperty Name="UpdateNo" ColumnName="UpdateNo" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Report_Master">
+            <EntityTypeMapping TypeName="BarcodeScanModel.Report_Master">
+              <MappingFragment StoreEntitySet="Report_Master">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="PartName" ColumnName="PartName" />
+                <ScalarProperty Name="IDENTIFICATION_MARK" ColumnName="IDENTIFICATION_MARK" />
+                <ScalarProperty Name="Check_Status" ColumnName="Check_Status" />
+                <ScalarProperty Name="Added_DateTime" ColumnName="Added_DateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserMasters">
+            <EntityTypeMapping TypeName="BarcodeScanModel.UserMaster">
+              <MappingFragment StoreEntitySet="UserMaster">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="PWord" ColumnName="PWord" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="BarcodeScanModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ModelMaster2">
+            <EntityTypeMapping TypeName="BarcodeScanModel.ModelMaster2">
+              <MappingFragment StoreEntitySet="ModelMaster2">
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="PartNo" ColumnName="PartNo" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="PartDescription" ColumnName="PartDescription" />
+                <ScalarProperty Name="Activestatus" ColumnName="Activestatus" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PartType" ColumnName="PartType" />
+                <ScalarProperty Name="PartName" ColumnName="PartName" />
+                <ScalarProperty Name="ModelCode" ColumnName="ModelCode" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getreportssp" FunctionName="BarcodeScanModel.Store.getreportssp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BarcodeScanModel.getreportssp_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ModelCode" ColumnName="ModelCode" />
+                <ScalarProperty Name="PartName" ColumnName="PartName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Activestatus" ColumnName="Activestatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Getfuctionreport" FunctionName="BarcodeScanModel.Store.getreportssp" />
+          <EntitySetMapping Name="Reports">
+            <EntityTypeMapping TypeName="BarcodeScanModel.Report">
+              <MappingFragment StoreEntitySet="Report">
+                <ScalarProperty Name="TStamp" ColumnName="TStamp" />
+                <ScalarProperty Name="Activestatus" ColumnName="Activestatus" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PartName" ColumnName="PartName" />
+                <ScalarProperty Name="ModelCode" ColumnName="ModelCode" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,75 @@
+﻿@model ScanMaster.EngMaster
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EngMaster</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Vcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModelName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModelName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModelCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModelCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatesDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatesDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdateNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdateNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activestatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activestatus)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

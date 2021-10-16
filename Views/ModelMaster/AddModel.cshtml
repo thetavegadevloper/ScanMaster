@@ -1,0 +1,113 @@
+﻿@model ScanMaster.ModelMaster2
+
+@{
+    // ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@if ((string)TempData["Referrer"] == "SaveRegister")
+{
+    <div class="alert alert-success">
+        <strong>You have registered successfully</strong>
+    </div>
+}
+
+@using (Html.BeginForm("Createmodelrecord", "ModelMaster", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="details">
+        <h2>
+            Add Checklist Details
+        </h2>
+        <table class="table table-responsive">
+            <tr>
+
+                <td>Select Model Name</td>
+                <td> Model Code</td>
+                <td>Barcode</td>
+
+            </tr>
+            <tr class="mycontainer" id="mainrow">
+                <td>
+                    @Html.DropDownListFor(x => Model.ModelName, new SelectList(Model.ModelNamelist, "Text", "Text"), "Select", htmlAttributes: new { @class = "form-control"})
+                    @Html.ValidationMessageFor(model => model.ModelName, "", new { @class = "text-danger" })
+                </td>
+                <td>
+                    @Html.DropDownListFor(x => Model.ModelCode, new SelectList(Model.Modelcodelist, "Text", "Text"), "Select", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ModelCode, "", new { @class = "text-danger" })
+                </td>
+                <td>
+                    @Html.DropDownListFor(x => Model.Barcode, new SelectList(Model.Barcodelist, "Text", "Text"), "Select", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Barcode, "", new { @class = "text-danger" })
+                </td>
+
+            </tr>
+        </table>
+    </div>
+
+    <table id="tblCustomers" class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Add Part Names</th>
+                <th>Add Part Description</th>
+                <th>Add Part No.</th>
+                <th>Exclusive Part</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+
+                    @Html.EditorFor(model => model.PartName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PartName, "", new { @class = "text-danger" })
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.PartDescription, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PartDescription, "", new { @class = "text-danger" })
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.PartNo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PartNo, "", new { @class = "text-danger" })
+                </td>
+                <td>
+                    @Html.DropDownListFor(m => m.PartType, new SelectList(Enum.GetValues(typeof(Option))), "Select", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PartType, "", new { @class = "text-danger" })
+
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.Imagefile, new { type = "file", @class = "btn btn-default btn-file" })
+                    @Html.ValidationMessageFor(model => model.Imagefile, "", new { @class = "text-danger" })
+                </td>
+                <td><input type="submit" id="btnAdd" value="+Add" class="btn btn-primary" /></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <br />
+
+    @Html.ActionLink("Back to List", "Details", null, new { @class = "btn btn-primary" })
+
+
+}
+<link href="~/Content/bootstrap2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<script>
+
+</script>
+
+<style>
+    span.error {
+        display: block;
+        visibility: hidden;
+        color: red;
+        font-size: 90%;
+    }
+
+    tr.error {
+        background-color: rgba(255,0,0,0.35);
+    }
+</style>

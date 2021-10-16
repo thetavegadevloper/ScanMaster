@@ -1,0 +1,122 @@
+﻿@model  IEnumerable<ScanMaster.Report>
+
+@{
+    ViewBag.Title = "Report";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using PagedList.Mvc;
+@using PagedList;
+
+
+
+@using (Html.BeginForm("Report", "ReportAll", FormMethod.Get))
+{
+    <div class="container">
+        <h2>Report</h2>
+        <table class="table table-responsive">
+            <tr class="mycontainer" id="mainrow">
+                <td>
+                    <select id="ModelCode" class=" form-control" onchange="loadData1()">
+                        <option>--Select Model Code--</option>
+                    </select>
+                    <input type="hidden" id="s1" name="search" placeholder="Enter Model Code...." class="form-control" />
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
+                </td>
+                <td>
+                    @Html.ActionLink("Find By Date", "Report2", null, new { @class = "btn btn-primary" })
+                </td>
+            </tr>
+        </table>
+        <div class="liste" style="height:450px; overflow:scroll">
+            <div id="accordion">
+                @{
+                    foreach (var item in Model.Select(m => new { m.TStamp, m.ModelCode }).Distinct())
+                    {
+                                <h3> Model Code: @item.ModelCode  // DateTime: @item.TStamp </h3>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>
+                                            Part Name
+                                        </th>
+                                        <th>
+                                            ModelCode
+                                        </th>
+                                        <th>
+                                            Status
+                                        </th>
+                                        <th>
+                                            DateTime
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                    @foreach (var i in Model.Where(a => a.TStamp.Equals(@item.TStamp)))
+                                    {
+                                        <tbody id="tablebody">
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => i.PartName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => i.ModelCode)
+                                                </td>
+                                                <td class="stat">
+                                                    @{var isAttachmentA = (i.Activestatus.GetValueOrDefault() ? "OK" : "NotOk");}
+                                                    @Html.DisplayFor(modelItem => isAttachmentA)                           
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => i.CreatedDate)
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                     }
+                                </table>
+
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}
+<script src="~/Scripts/myScripts.js"></script>
+<script language="javascript">
+    $(function () {
+        $("#accordion").accordion({
+            heightStyle: "content"
+        });
+    });
+</script>
+<script type="text/javascript">
+   
+    var modelcode;
+    function loadData1() {
+        modelcode = $('#ModelCode :selected').text();
+        //  $("#s1").text(modelcode);
+        $("#s1").val(modelcode);
+        // console.log(modelcode);
+    };
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#tablebody > tr").each(function (index, elem) {
+            var status = $.trim($(elem).find(".stat").html()); 
+            if (status == "NotOk") {
+                $(elem).find(".stat").css('background', 'brown');
+            }
+            else if (status == "OK") {
+                $(elem).find(".stat").css('background', 'green');
+            }
+            console.log(status);
+        });
+    });
+</script>
+
+<style>
+
+    .stat {
+        background:grey;
+        color:wheat;
+    }
+</style>

@@ -1,0 +1,73 @@
+﻿@model ScanMaster.UserMaster
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<style>
+
+    #CaptchaInputText {
+        text-transform: uppercase;
+    }
+</style>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="login-panel">
+        @if (ViewBag.errormessage != null)
+        {
+            <p class="alert alert-danger" id="successMessage">@ViewBag.errormessage</p>
+        }
+      
+        <div class="form-group">
+            <div class="col-md-12 col-xs-12"  style=margin-left:10%; >
+                <h3 class="center">Login</h3>
+            </div>
+        </div>
+
+        @Html.ValidationSummary(true,"", new { @class = "text-danger" })
+
+        
+        <div class="form-group">
+            
+            <div class="col-md-12 col-xs-12">
+                @Html.LabelFor(model => model.UserName)
+                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @maxlength = 20 })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+          
+            <div class="col-md-12 col-xs-12">
+                <label>PassWord</label>
+                @Html.PasswordFor(model => model.PWord, new { @class = "form-control", @maxlength = 30 })
+                @Html.ValidationMessageFor(model => model.PWord, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+       
+        <div class="form-group">
+            <div class="col-md-offset-0 col-md-10">
+                <input id="Submit1" class="btn btn-success" type="submit" value="Sign in ">
+            </div>
+
+        </div>
+        <div class="form-group">
+            <img src="~/Content/Images/Main02.png" class="center"/>
+            
+        </div>
+    </div>
+
+    <style>
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+           width:40%;
+        }
+    </style>
+}

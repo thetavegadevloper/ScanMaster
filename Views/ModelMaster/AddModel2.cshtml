@@ -1,0 +1,288 @@
+﻿@model ScanMaster.ModelMaster2
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<body>
+    <form id="Dtls">
+       
+        <div class="container">
+
+            <div class="details">
+                <h2>
+                    Add Checklist Details
+                </h2>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Add Part Details </div>
+                    <div class="panel-body">
+                        <table class="table table-responsive">
+                            <tr>
+                                <td>Select Model Name</td>
+                                <td> Model Code</td>
+                                <td> Barcode</td>
+                            </tr>
+                            <tr class="mycontainer" id="mainrow">
+                                <td>
+                                    <select id="ModelName" class=" form-control" onchange="loadData1()">
+                                        <option>Select</option>
+                                    </select>
+                                    <span class="error" style="visibility: hidden ; color:brown ">Select Model name</span>
+                                </td>
+                                <td>
+                                    <label id="mctxt" style="color: #1e83ca;"></label>
+                                </td>
+                                <td>
+                                   <label id="bctxt" style="color: #1e83ca;"> </label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <table id="tblCustomers" class="table table-responsive">
+                      
+                            <tr>
+                                <th>Add Part Names</th>
+                                <th>Add Part Description</th>
+                                <th>Add Part No.</th>
+                                <th>Exclusive Part</th>
+                                <th>Part Image</th>
+                            </tr>
+                       
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>
+                                    <input type="text" id="txtName" class=" form-control">
+                                    <span class="error" style="visibility: hidden ; color:brown">Enter part name</span>
+                                </td>
+                                <td>
+                                    <input type="text" id="txtDes" class=" form-control">
+                                    <span class="error" style="visibility: hidden ; color:brown">Enter part description</span>
+                                </td>
+                                <td>
+                                    <input type="text" id="txtNo" class=" form-control">
+                                    <span class="error" style="visibility: hidden ; color:brown">Enter part number</span>
+                                </td>
+                                <td>
+                                    <select id="Category1" class=" form-control">
+                                        <option>No</option>
+                                        <option>Yes</option>
+                                    </select>
+                                    <span class="error" style="visibility: hidden ; color:brown ">Select Category</span>
+                                </td>
+                                <td>
+                                    <input type="file" name="FileUpload1" id="FileUpload1" class=" form-control" />
+                                    <span class="error" style="visibility: hidden ; color:brown ">Select Image</span>
+                                </td>
+                                <td><input type="button" id="btnAdd" value="+Add" class="btn btn-success" /></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <br />
+                </div>
+            </div>
+            @Html.ActionLink("Back to List", "Details", null, new { @class = "btn btn-primary" })
+
+        </div>
+    </form>
+        <link href="~/Content/bootstrap2.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script src="~/Scripts/myScripts.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script type="text/javascript">
+
+          //  var Names = []
+            var modelname;
+            function loadData1() {
+                modelname = $('#ModelName :selected').text();
+                $.ajax({
+                            url:  '/ModelMaster/GetModelNamedetails',
+                            data: { modelname: modelname },
+                            type: "GET",
+                            dataType: "json",
+                            success: function (data) {
+                                loadData(data);
+                               // alert("ok");
+                               
+                             //   Names = data;
+                              //  console.log(Names, $('#ModelName :selected').text() );
+                            },
+                            error: function () {
+                                alert("Failed! Please try again.");
+                            }
+                });
+            };
+
+            function loadData(data) {
+
+                $.each(data, function (i, val) {
+                    $("#mctxt").text(val.ModelCode)  ;
+                    $("#bctxt").text(val.Barcode) ;
+                });
+
+            };
+
+
+            //$("body").on("click", "#btnAdd", function () {
+            //    var isAllValid = true;
+            //    if ($('#txtName').val() == "") {
+            //        isAllValid = false;
+            //        $('#txtName').siblings('span.error').css('visibility', 'visible');
+            //    }
+            //    else {
+            //        $('#txtName').siblings('span.error').css('visibility', 'hidden');
+            //    }
+            //    if (isAllValid) {
+            //        //Reference the Name and Country TextBoxes.
+            //        var txtName = $("#txtName");
+            //        var txtDes = $("#txtDes");
+            //        var txtNo = $("#txtNo");
+            //        var Category = $("#Category1:selected");
+            //        //   var ipath = $("#Imge");
+
+            //        //Get the reference of the Table's TBODY element.
+            //        var tBody = $("#tblCustomers > TBODY")[0];
+
+            //        //Add Row.
+            //        var row = tBody.insertRow(-1);
+
+            //        //Add Name cell.
+            //        var cell = $(row.insertCell(-1));
+            //        cell.html(txtName.val());
+
+            //        var cell = $(row.insertCell(-1));
+            //        cell.html(txtDes.val());
+
+            //        var cell = $(row.insertCell(-1));
+            //        cell.html(txtNo.val());
+
+            //        var cell = $(row.insertCell(-1));
+            //        cell.html($('#Category1 option:selected').text());
+
+            //        //  var cell = $(row.insertCell(-1));
+            //        //  cell.html(document.getElementById("Imge").files[0].name);
+            //        //Add Button cell.
+            //        cell = $(row.insertCell(-1));
+            //        var btnRemove = $("<input />");
+            //        btnRemove.attr("type", "button");
+            //        btnRemove.addClass('btn-danger');
+            //        btnRemove.attr("onclick", "Remove(this);");
+            //        btnRemove.val("Remove");
+            //        cell.append(btnRemove);
+
+            //        //Clear the TextBoxes.
+            //        txtName.val("");
+            //        txtDes.val("");
+            //        Category.val("");
+            //        txtNo.val("");
+            //        var customers = new Array();
+
+            //        var customer = {};
+            //        customer.PartName = $('#txtName ').text();
+            //        customer.PartDescription = $('#txtDes ').text();
+            //        customer.PartNo = $('#txtNo :selected').text();
+            //        customer.PartType = $('#Category1 :selected').text();
+            //        customer.ModelName = $('#ModelName :selected').text();
+            //        customer.ModelCode = $('#ModelCode :selected').text();
+            //        customer.Barcode = $('#Barcode1 :selected').text();
+            //        customers.push(customer);
+            //    }
+            //});
+
+            //function Remove(button) {
+            //    //Determine the reference of the Row using the Button.
+            //    var row = $(button).closest("TR");
+            //    var name = $("TD", row).eq(0).html();
+            //    if (confirm("Do you want to delete: " + name)) {
+            //        //Get the reference of the Table.
+            //        var table = $("#tblCustomers")[0];
+
+            //        //Delete the Table row using it's Index.
+            //        table.deleteRow(row[0].rowIndex);
+            //    }
+            //};
+                     var txtName = $("#txtName");
+                     var txtDes = $("#txtDes");
+                     var txtNo = $("#txtNo");
+                     var tfile = $("#FileUpload1");
+
+            $("body").on("click", "#btnAdd", function () {
+                var isAllValid = true;
+                if ($('#ModelName').val() == "0") {
+                    $('#ModelName').siblings('span.error').css('visibility', 'visible');
+                    isAllValid = false;
+                }
+                else {
+                    $('#ModelName').siblings('span.error').css('visibility', 'hidden');
+                }
+
+               
+                if ($('#txtName').val().trim() == '') {
+                    $('#txtName').siblings('span.error').css('visibility', 'visible');
+                    isAllValid = false;
+                }
+                else {
+                    $('#txtName').siblings('span.error').css('visibility', 'hidden');
+                }
+                if ($('#txtDes').val().trim() == '') {
+                    $('#txtDes').siblings('span.error').css('visibility', 'visible');
+                    isAllValid = false;
+                }
+                else {
+                    $('#txtDes').siblings('span.error').css('visibility', 'hidden');
+                }
+                if ($('#txtNo').val().trim() == '') {
+                    $('#txtNo').siblings('span.error').css('visibility', 'visible');
+                    isAllValid = false;
+                }
+                else {
+                    $('#txtNo').siblings('span.error').css('visibility', 'hidden');
+                }
+                if ($('#FileUpload1').val().trim() == '') {
+                    $('#FileUpload1').siblings('span.error').css('visibility', 'visible');
+                    isAllValid = false;
+                }
+                else {
+                    $('#FileUpload1').siblings('span.error').css('visibility', 'hidden');
+                }
+                if (isAllValid) {
+                    var formData = new FormData();
+                    formData.append('PartName', $('#txtName ').val());
+                    formData.append('PartDescription', $('#txtDes ').val());
+                    formData.append('PartNo', $('#txtNo ').val());
+                    formData.append('PartType', $('#Category1 :selected').text());
+                    formData.append('ModelName', $('#ModelName :selected').text());
+                    formData.append('ModelCode', $('#mctxt').text());
+                    formData.append('Barcode', $('#bctxt').text());
+
+                    var files = $("#FileUpload1").get(0).files;
+                    for (var i = 0; i < files.length; i++) {
+                        formData.append(files[i].name, files[i]);
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Modelmaster/InsertModelData",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+
+                        success: function (r) {
+                            alert(r + " record(s) inserted.");
+                            txtName.val("");
+                            txtDes.val("");
+                            tfile.val("");
+                            txtNo.val("");
+                        }
+                    });
+                }
+            });
+
+        </script>
+       
+</body>
+

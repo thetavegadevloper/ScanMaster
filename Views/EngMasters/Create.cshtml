@@ -1,0 +1,77 @@
+﻿@model ScanMaster.Models.EngInsertView
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container">
+    <h2>Add New</h2>
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+<div class="panel panel-default">
+    <div class="panel-heading">Create New </div>
+    <div class="panel-body">
+        <div class="form-horizontal">
+
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Barcode, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Barcode, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Barcode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ModelName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.ModelName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ModelName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ModelCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.ModelCode, new { htmlAttributes = new { @class = "form-control", @onblur = "CheckModelCode();" } })
+                    @Html.ValidationMessageFor(model => model.ModelCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-success " />
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+            }
+
+            <div>
+                @Html.ActionLink("Back to Details", "Index", null, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+
+        <script type="text/javascript">
+
+        function CheckModelCode() {
+            var url = '@Url.Content("~/")' + "EngMasters/CheckModelCodeExists";
+            var source = "#ModelCode";
+            $.post(url, { ModelCode: $(source).val() }, function (data) {
+            if (data) {
+            $(source).val('');
+            alert("ModelCode Already Used try unique one!");
+            }
+            else {
+
+            }
+            });
+        }
+
+
+        </script>

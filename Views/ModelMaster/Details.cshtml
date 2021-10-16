@@ -1,0 +1,122 @@
+﻿@model IPagedList<ScanMaster.ModelMaster2>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using PagedList.Mvc;
+@using PagedList;
+<div class="container">
+    <h2>Model Master Details</h2>
+    @using (Html.BeginForm("Details", "ModelMaster", FormMethod.Get))
+    {
+
+        <table class="table table-responsive">
+
+            <tr class="mycontainer" id="mainrow">
+                <td>
+                    @Html.ActionLink("+Add New ", "AddModel2", null, new { @class = "btn btn-success" })
+                </td>
+                <td>
+                    <select id="ModelName" class=" form-control" onchange="loadData1()">
+                        <option>--Select Model Name--</option>
+                    </select>
+                    <input type="hidden" id="s1" name="search" placeholder="Enter Model  Name...." class="form-control" />
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
+                </td>
+            </tr>
+        </table>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().ModelName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().ModelCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().PartName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().PartType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().PartDescription)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().Barcode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().CreatedDate)
+                    </th>
+                    <th>
+
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModelName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModelCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PartName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PartType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PartDescription)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Barcode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedDate)
+                        </td>
+
+                        <td>
+                            <a href="@Url.Action("EditModel", new { id = item.ID }) ">
+                                <i class="glyphicon glyphicon-pencil"> </i>
+                                <span class="sr-only">Edit</span>
+                            </a>
+                        </td>
+
+                        <td>
+                            <a href="@Url.Action("DeleteModel", new { id = item.ID })">
+                                <i class="glyphicon glyphicon-trash"></i>
+                                <span class="sr-only">Delete</span>
+                            </a>
+
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            @Html.PagedListPager(Model, i => Url.Action("Details", "ModelMaster", new { i, search = Request.QueryString["Search"] }))
+        </div>
+    }
+</div>
+<link href="~/Content/bootstrap2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="~/Scripts/myScripts.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    var modelname;
+    function loadData1() {
+        modelname = $('#ModelName :selected').text();
+      //  $("#s1").text(modelcode);
+        $("#s1").val(modelname);
+       // console.log(modelname);
+    };
+</script>
