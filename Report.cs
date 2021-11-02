@@ -24,4 +24,5 @@ namespace ScanMaster
         public Nullable<bool> Activestatus { get; set; }
         public string TStamp { get; set; }
     }
+    
 }
